@@ -50,6 +50,11 @@ class Customer
     protected $freespeeCallerId;
 
     /**
+     * @var CustomerAddress
+     */
+    protected $address;
+
+    /**
      * @return int
      */
     public function getId()
@@ -191,5 +196,21 @@ class Customer
     public function setFreespeeCallerId($freespeeCallerId)
     {
         $this->freespeeCallerId = $freespeeCallerId;
+    }
+
+    /**
+     * @return CustomerAddress
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param CustomerAddress $address
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
     }
 }
