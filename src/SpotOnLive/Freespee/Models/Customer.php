@@ -2,7 +2,7 @@
 
 namespace SpotOnLive\Freespee\Models;
 
-class Customer
+class Customer implements CustomerInterface
 {
     /**
      * @var integer Freespee's unique ID for customer.

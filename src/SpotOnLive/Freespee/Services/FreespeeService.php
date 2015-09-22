@@ -8,6 +8,7 @@ use SpotOnLive\Freespee\Exceptions\InvalidAreaException;
 use SpotOnLive\Freespee\Models\Call;
 use SpotOnLive\Freespee\Models\Customer;
 use SpotOnLive\Freespee\Models\CustomerAddress;
+use SpotOnLive\Freespee\Models\CustomerInterface;
 use SpotOnLive\Freespee\Options\ApiOptions;
 
 class FreespeeService implements FreespeeServiceInterface
@@ -27,7 +28,7 @@ class FreespeeService implements FreespeeServiceInterface
      * Find customers
      *
      * @param int $page
-     * @return array|\SpotOnLive\Freespee\Models\Customer[]
+     * @return array|CustomerInterface[]
      */
     public function findAllCustomers($page = 0)
     {
@@ -35,7 +36,7 @@ class FreespeeService implements FreespeeServiceInterface
             'page' => $page,
         ]);
 
-        /** @var array|Customer[] $return */
+        /** @var array|CustomerInterface[] $return */
         $return = [];
 
         foreach ($customers['customers'] as $customerData) {
@@ -80,7 +81,7 @@ class FreespeeService implements FreespeeServiceInterface
      * Find customer
      *
      * @param integer $id
-     * @return Customer|null
+     * @return CustomerInterface|null
      */
     public function findCustomer($id)
     {
@@ -121,11 +122,11 @@ class FreespeeService implements FreespeeServiceInterface
     /**
      * Find calls
      *
-     * @param Customer $customer
+     * @param CustomerInterface $customer
      * @param array $params
      * @return array
      */
-    public function findCalls(Customer $customer, $params = [])
+    public function findCalls(CustomerInterface $customer, $params = [])
     {
         // Set customer id
         $params['customer_id'] = $customer->getId();
