@@ -4,7 +4,6 @@ namespace SpotOnLive\Freespee\Services;
 
 use SpotOnLive\Freespee\Exceptions\InvalidAPICallException;
 use SpotOnLive\Freespee\Exceptions\InvalidCredentialsException;
-use SpotOnLive\Freespee\Exceptions\InvalidAreaException;
 use SpotOnLive\Freespee\Models\Call;
 use SpotOnLive\Freespee\Models\Customer;
 use SpotOnLive\Freespee\Models\CustomerAddress;
