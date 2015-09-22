@@ -8,6 +8,9 @@ before_script:
   - composer self-update
   - composer install --prefer-source
 
+notifications:
+  slack: spotonmarketing:FQr1BStX659LcdTXtr0OROq5
+
 script:
   - ./vendor/bin/phpunit --coverage-clover ./build/logs/clover.xml
   - ./vendor/bin/phpcs --standard=PSR2 ./src/ ./tests/ -n
