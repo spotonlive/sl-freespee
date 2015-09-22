@@ -13,7 +13,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\Application;
 use SpotOnLive\Freespee\Services\FreespeeService;
 
-class NavigationServiceProvider extends ServiceProvider
+class FreespeeServiceProvider extends ServiceProvider
 {
     public function boot()
     {
