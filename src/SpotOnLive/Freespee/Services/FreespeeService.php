@@ -173,7 +173,7 @@ class FreespeeService implements FreespeeServiceInterface
      */
     public function api($url, array $params = [])
     {
-        if(!empty($params)){
+        if (!empty($params)) {
             $queryString = http_build_query($params);
             $url .= "?" . $queryString;
         }
