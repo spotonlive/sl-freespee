@@ -4,7 +4,7 @@
  * Freespee integration for Laravel 5.1
  *
  * @license MIT
- * @package SpotOnLive\Navigation
+ * @package SpotOnLive\Freespee
  */
 
 namespace SpotOnLive\Freespee\Providers\Services;
