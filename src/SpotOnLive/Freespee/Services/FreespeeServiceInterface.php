@@ -7,10 +7,9 @@ interface FreespeeServiceInterface
     /**
      * Call API
      *
-     * @param string $type
-     * @param null $identifier
+     * @param string $url
      * @param array $params
-     * @return array
+     * @return mixed
      */
-    public function api($type, $identifier = null, array $params = []);
+    public function api($url, array $params = []);
 }
