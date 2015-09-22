@@ -86,9 +86,9 @@ class FreespeeService implements FreespeeServiceInterface
     /**
      * Validate API area
      *
-     * @param string $area
+     * @param $area
      * @return bool
-     * @throws InvalidTypeException
+     * @throws InvalidAreaException
      */
     public function validateArea($area)
     {
