@@ -3,7 +3,7 @@
 namespace SpotOnLive\Freespee\Services;
 
 use SpotOnLive\Freespee\Exceptions\InvalidCredentialsException;
-use SpotOnLive\Freespee\Exceptions\InvalidTypeException;
+use SpotOnLive\Freespee\Exceptions\InvalidAreaException;
 use SpotOnLive\Freespee\Options\ApiOptions;
 
 class FreespeeService implements FreespeeServiceInterface
@@ -11,7 +11,7 @@ class FreespeeService implements FreespeeServiceInterface
     /** @var ApiOptions */
     protected $config;
 
-    protected $allowedTypes = [
+    protected $allowedArea = [
         'customers',
     ];
 
@@ -26,18 +26,18 @@ class FreespeeService implements FreespeeServiceInterface
     /**
      * Call API
      *
-     * @param string $type
+     * @param string $area
      * @param null $identifier
      * @param array $params
      * @return array
-     * @throws InvalidTypeException
+     * @throws InvalidAreaException
      */
-    public function api($type, $identifier = null, array $params = [])
+    public function api($area, $identifier = null, array $params = [])
     {
-        $this->validateType($type);
+        $this->validateArea($area);
 
         // Url
-        $url = $this->getUrl() . '/' . $type;
+        $url = $this->getUrl() . '/' . $area;
 
         if ($identifier) {
             $url .= '/' . $identifier;
@@ -84,19 +84,19 @@ class FreespeeService implements FreespeeServiceInterface
     }
 
     /**
-     * Validate API type
+     * Validate API area
      *
-     * @param string $type
+     * @param string $area
      * @return bool
      * @throws InvalidTypeException
      */
-    public function validateType($type)
+    public function validateArea($area)
     {
-        if (!in_array($type, $this->getAllowedTypes())) {
-            throw new InvalidTypeException(
+        if (!in_array($area, $this->getAllowedAreas())) {
+            throw new InvalidAreaException(
                 sprintf(
-                    _('The API type "%s" is not allowed'),
-                    $type
+                    _('The API area "%s" is not allowed'),
+                    $area
                 )
             );
         }
@@ -115,22 +115,22 @@ class FreespeeService implements FreespeeServiceInterface
     }
 
     /**
-     * Set allowed API types
+     * Set allowed API areas
      *
-     * @param array $allowedTypes
+     * @param array $allowedAreas
      */
-    public function setAllowedTypes(array $allowedTypes)
+    public function setAllowedAreas(array $allowedAreas)
     {
-        $this->allowedTypes = $allowedTypes;
+        $this->allowedAreas = $allowedAreas;
     }
 
     /**
-     * Get allowed types
+     * Get allowed areas
      *
      * @return array
      */
-    protected function getAllowedTypes()
+    protected function getAllowedAreas()
     {
-        return $this->allowedTypes;
+        return $this->allowedAreas;
     }
 }
