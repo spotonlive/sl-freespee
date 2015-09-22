@@ -128,7 +128,7 @@ class FreespeeService implements FreespeeServiceInterface
     public function findCalls(Customer $customer, $params = [])
     {
         // Set customer id
-        $data['customer_id'] = $customer->getId();
+        $params['customer_id'] = $customer->getId();
         $callsData = $this->api('/statistics/cdrs', $params);
 
         $return = [
@@ -173,8 +173,8 @@ class FreespeeService implements FreespeeServiceInterface
      */
     public function api($url, array $params = [])
     {
-        if(!empty($data)){
-            $queryString = http_build_query($data);
+        if(!empty($params)){
+            $queryString = http_build_query($params);
             $url .= "?" . $queryString;
         }
 
