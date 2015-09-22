@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Dynamic navigations for Laravel 5.1
+ * Freespee integration for Laravel 5.1
  *
  * @license MIT
  * @package SpotOnLive\Navigation
