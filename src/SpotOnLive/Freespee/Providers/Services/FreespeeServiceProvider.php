@@ -15,6 +15,9 @@ use SpotOnLive\Freespee\Services\FreespeeService;
 
 class FreespeeServiceProvider extends ServiceProvider
 {
+    /**
+     * Publish config
+     */
     public function boot()
     {
         $this->publishes([
@@ -38,6 +41,9 @@ class FreespeeServiceProvider extends ServiceProvider
         $this->mergeConfig();
     }
 
+    /**
+     * Merge condfig
+     */
     private function mergeConfig()
     {
         $this->mergeConfigFrom(
