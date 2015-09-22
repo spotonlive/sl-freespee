@@ -5,6 +5,7 @@ namespace SpotOnLive\Freespee\Services;
 use SpotOnLive\Freespee\Exceptions\InvalidAPICallException;
 use SpotOnLive\Freespee\Exceptions\InvalidCredentialsException;
 use SpotOnLive\Freespee\Exceptions\InvalidAreaException;
+use SpotOnLive\Freespee\Models\Customer;
 use SpotOnLive\Freespee\Options\ApiOptions;
 
 class FreespeeService implements FreespeeServiceInterface
@@ -20,9 +21,31 @@ class FreespeeService implements FreespeeServiceInterface
         $this->config = new ApiOptions($config);
     }
 
+    /**
+     * Find customers
+     *
+     * @return array|Customer[]
+     */
     public function findAllCustomers()
     {
         $customers = $this->api('/customers');
+    }
+
+    /**
+     * Find customer
+     *
+     * @param integer $id
+     * @return Customer
+     */
+    public function findCustomer($id)
+    {
+        $customerData = $this->api('/customers', [
+            'customer_id' => $id,
+        ]);
+
+        $customer = new Customer();
+
+        return $customer;
     }
 
     /**
