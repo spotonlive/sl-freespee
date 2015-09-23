@@ -7,6 +7,7 @@ use DateTimeZone;
 use SpotOnLive\Freespee\Exceptions\InvalidAPICallException;
 use SpotOnLive\Freespee\Exceptions\InvalidCredentialsException;
 use SpotOnLive\Freespee\Models\Call;
+use SpotOnLive\Freespee\Models\CallInterface;
 use SpotOnLive\Freespee\Models\Customer;
 use SpotOnLive\Freespee\Models\CustomerAddress;
 use SpotOnLive\Freespee\Models\CustomerInterface;
@@ -134,7 +135,7 @@ class FreespeeService implements FreespeeServiceInterface
      *
      * @param CustomerInterface $customer
      * @param array $params
-     * @return array
+     * @return array|CallInterface[]
      */
     public function findCalls(CustomerInterface $customer, $params = [])
     {

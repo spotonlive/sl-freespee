@@ -2,7 +2,7 @@
 
 namespace SpotOnLive\Freespee\Models;
 
-class Call
+class Call implements CallInterface
 {
     /**
      * @var integer
