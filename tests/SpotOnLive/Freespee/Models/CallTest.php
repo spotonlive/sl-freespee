@@ -65,6 +65,16 @@ class CallTest extends PHPUnit_Framework_TestCase
         $this->assertSame($value, $result);
     }
 
+    public function testAnumMd5()
+    {
+        $value = 'md5';
+        $this->model->setAnumMd5($value);
+
+        $result = $this->model->getAnumMd5();
+
+        $this->assertSame($value, $result);
+    }
+
     public function testBnum()
     {
         $value = 'tester5';

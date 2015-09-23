@@ -78,4 +78,25 @@ class OptionsTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame($this->demoOptions[$key], $result);
     }
+
+    public function testMergeAssociative()
+    {
+        $defaults = [
+            'a' => 'b',
+            'c' => 'd',
+        ];
+
+        $options = [
+            'a' => 'c',
+        ];
+
+        $expected = [
+            'a' => 'c',
+            'c' => 'd',
+        ];
+
+        $result = $this->options->mergeAssociative($defaults, $options);
+
+        $this->assertSame($expected, $result);
+    }
 }

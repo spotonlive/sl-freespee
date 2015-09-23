@@ -31,7 +31,7 @@
                 <directory>./tests</directory>
                 <directory>./vendor</directory>
 
-                <file>./src/Services/CurlService.php</file>
+                <file>./src/SpotOnLive/Freespee/Services/CurlService.php</file>
             </exclude>
         </whitelist>
     </filter>
