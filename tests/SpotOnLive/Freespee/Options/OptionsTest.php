@@ -82,16 +82,22 @@ class OptionsTest extends PHPUnit_Framework_TestCase
     public function testMergeAssociative()
     {
         $defaults = [
-            'a' => 'b',
+            'a' => [
+                'b' => 'c'
+            ],
             'c' => 'd',
         ];
 
         $options = [
-            'a' => 'c',
+            'a' => [
+                'b' => 'd'
+            ],
         ];
 
         $expected = [
-            'a' => 'c',
+            'a' => [
+                'b' => 'd'
+            ],
             'c' => 'd',
         ];
 
