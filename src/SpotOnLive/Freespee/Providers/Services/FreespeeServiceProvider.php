@@ -30,7 +30,7 @@ class FreespeeServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('SpotOnLive\Freespee\Services\FreespeeService', function(Application $app) {
+        $this->app->bind('SpotOnLive\Freespee\Services\FreespeeService', function (Application $app) {
             if (!$freespeeConfig = config('freespee')) {
                 $freespeeConfig = [];
             }
