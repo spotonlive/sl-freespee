@@ -75,6 +75,76 @@ class Call
     protected $anumNdcName;
 
     /**
+     * @var \DateTime|null
+     */
+    protected $expire = null;
+
+    /**
+     * @var \DateTime|null
+     */
+    protected $sourceTimestamp = null;
+
+    /**
+     * @var string|null
+     */
+    protected $sourceName = null;
+
+    /**
+     * @var string|null
+     */
+    protected $sourceMedia = null;
+
+    /**
+     * @var integer|null
+     */
+    protected $class = null;
+
+    /**
+     * @var integer|null
+     */
+    protected $publisherId = null;
+
+    /**
+     * @var integer|null
+     */
+    protected $partnerPublisherId = null;
+
+    /**
+     * @var integer|null
+     */
+    protected $campaignId = null;
+
+    /**
+     * @var integer|null
+     */
+    protected $partnerCampaignId = null;
+
+    /**
+     * @var integer|null
+     */
+    protected $pricingModelId = null;
+
+    /**
+     * @var float|null
+     */
+    protected $commission = null;
+
+    /**
+     * @var integer|null
+     */
+    protected $cliId = null;
+
+    /**
+     * @var integer|null
+     */
+    protected $orderId = null;
+
+    /**
+     * @var string|null
+     */
+    protected $recordingId = null;
+
+    /**
      * @return int
      */
     public function getCdrId()
@@ -296,5 +366,229 @@ class Call
     public function setAnumNdcName($anumNdcName)
     {
         $this->anumNdcName = $anumNdcName;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getExpire()
+    {
+        return $this->expire;
+    }
+
+    /**
+     * @param \DateTime|null $expire
+     */
+    public function setExpire($expire)
+    {
+        $this->expire = $expire;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getSourceTimestamp()
+    {
+        return $this->sourceTimestamp;
+    }
+
+    /**
+     * @param \DateTime|null $sourceTimestamp
+     */
+    public function setSourceTimestamp($sourceTimestamp)
+    {
+        $this->sourceTimestamp = $sourceTimestamp;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getSourceName()
+    {
+        return $this->sourceName;
+    }
+
+    /**
+     * @param null|string $sourceName
+     */
+    public function setSourceName($sourceName)
+    {
+        $this->sourceName = $sourceName;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getSourceMedia()
+    {
+        return $this->sourceMedia;
+    }
+
+    /**
+     * @param null|string $sourceMedia
+     */
+    public function setSourceMedia($sourceMedia)
+    {
+        $this->sourceMedia = $sourceMedia;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getClass()
+    {
+        return $this->class;
+    }
+
+    /**
+     * @param int|null $class
+     */
+    public function setClass($class)
+    {
+        $this->class = $class;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPublisherId()
+    {
+        return $this->publisherId;
+    }
+
+    /**
+     * @param int|null $publisherId
+     */
+    public function setPublisherId($publisherId)
+    {
+        $this->publisherId = $publisherId;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPartnerPublisherId()
+    {
+        return $this->partnerPublisherId;
+    }
+
+    /**
+     * @param int|null $partnerPublisherId
+     */
+    public function setPartnerPublisherId($partnerPublisherId)
+    {
+        $this->partnerPublisherId = $partnerPublisherId;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCampaignId()
+    {
+        return $this->campaignId;
+    }
+
+    /**
+     * @param int|null $campaignId
+     */
+    public function setCampaignId($campaignId)
+    {
+        $this->campaignId = $campaignId;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPartnerCampaignId()
+    {
+        return $this->partnerCampaignId;
+    }
+
+    /**
+     * @param int|null $partnerCampaignId
+     */
+    public function setPartnerCampaignId($partnerCampaignId)
+    {
+        $this->partnerCampaignId = $partnerCampaignId;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPricingModelId()
+    {
+        return $this->pricingModelId;
+    }
+
+    /**
+     * @param int|null $pricingModelId
+     */
+    public function setPricingModelId($pricingModelId)
+    {
+        $this->pricingModelId = $pricingModelId;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getCommission()
+    {
+        return $this->commission;
+    }
+
+    /**
+     * @param float|null $commission
+     */
+    public function setCommission($commission)
+    {
+        $this->commission = $commission;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCliId()
+    {
+        return $this->cliId;
+    }
+
+    /**
+     * @param int|null $cliId
+     */
+    public function setCliId($cliId)
+    {
+        $this->cliId = $cliId;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getOrderId()
+    {
+        return $this->orderId;
+    }
+
+    /**
+     * @param int|null $orderId
+     */
+    public function setOrderId($orderId)
+    {
+        $this->orderId = $orderId;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getRecordingId()
+    {
+        return $this->recordingId;
+    }
+
+    /**
+     * @param null|string $recordingId
+     */
+    public function setRecordingId($recordingId)
+    {
+        $this->recordingId = $recordingId;
     }
 }

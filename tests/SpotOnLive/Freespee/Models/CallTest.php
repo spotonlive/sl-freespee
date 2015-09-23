@@ -154,4 +154,144 @@ class CallTest extends PHPUnit_Framework_TestCase
 
         $this->assertSame($value, $result);
     }
+
+    public function testExpire()
+    {
+        $value = new \DateTime;
+        $this->model->setExpire($value);
+
+        $result = $this->model->getExpire();
+
+        $this->assertSame($value, $result);
+    }
+
+    public function testSourceTimestamp()
+    {
+        $value = new \DateTime;
+        $this->model->setSourceTimestamp($value);
+
+        $result = $this->model->getSourceTimestamp();
+
+        $this->assertSame($value, $result);
+    }
+
+    public function testSourceName()
+    {
+        $value = 'tester13';
+        $this->model->setSourceName($value);
+
+        $result = $this->model->getSourceName();
+
+        $this->assertSame($value, $result);
+    }
+
+    public function testSourceMedia()
+    {
+        $value = 'tester14';
+        $this->model->setSourceMedia($value);
+
+        $result = $this->model->getSourceMedia();
+
+        $this->assertSame($value, $result);
+    }
+
+    public function testClass()
+    {
+        $value = 15;
+        $this->model->setClass($value);
+
+        $result = $this->model->getClass();
+
+        $this->assertSame($value, $result);
+    }
+
+    public function testPublisherId()
+    {
+        $value = 16;
+        $this->model->setPublisherId($value);
+
+        $result = $this->model->getPublisherId();
+
+        $this->assertSame($value, $result);
+    }
+
+    public function testPartnerPublisherId()
+    {
+        $value = 16;
+        $this->model->setPartnerPublisherId($value);
+
+        $result = $this->model->getPartnerPublisherId();
+
+        $this->assertSame($value, $result);
+    }
+
+    public function testCampaignId()
+    {
+        $value = 17;
+        $this->model->setCampaignId($value);
+
+        $result = $this->model->getCampaignId();
+
+        $this->assertSame($value, $result);
+    }
+
+    public function testPartnerCampaignId()
+    {
+        $value = 17;
+        $this->model->setPartnerCampaignId($value);
+
+        $result = $this->model->getPartnerCampaignId();
+
+        $this->assertSame($value, $result);
+    }
+
+    public function testPricingModelId()
+    {
+        $value = 500;
+        $this->model->setPricingModelId($value);
+
+        $result = $this->model->getPricingModelId();
+
+        $this->assertSame($value, $result);
+    }
+
+    public function testCommission()
+    {
+        $value = 350.00;
+        $this->model->setCommission($value);
+
+        $result = $this->model->getCommission();
+
+        $this->assertSame($value, $result);
+    }
+
+    public function testCliId()
+    {
+        $value = 18;
+        $this->model->setCliId($value);
+
+        $result = $this->model->getCliId();
+
+        $this->assertSame($value, $result);
+    }
+
+    public function testOrderId()
+    {
+        $value = 18;
+        $this->model->setOrderId($value);
+
+        $result = $this->model->getOrderId();
+
+        $this->assertSame($value, $result);
+    }
+
+    public function testRecordingId()
+    {
+        $value = '17e1e262-be4c-4819-958f-9032285311ce';
+        $this->model->setRecordingId($value);
+
+        $result = $this->model->getRecordingId();
+
+        $this->assertSame($value, $result);
+    }
 }

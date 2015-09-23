@@ -2,6 +2,8 @@
 
 namespace SpotOnLive\Freespee\Services;
 
+use DateTime;
+use DateTimeZone;
 use SpotOnLive\Freespee\Exceptions\InvalidAPICallException;
 use SpotOnLive\Freespee\Exceptions\InvalidCredentialsException;
 use SpotOnLive\Freespee\Models\Call;
@@ -18,13 +20,18 @@ class FreespeeService implements FreespeeServiceInterface
     /** @var CurlServiceInterface */
     protected $curlService;
 
+    /** @var DateTimeZone */
+    protected $timezone;
+
     /**
      * @param array $config
+     * @param CurlServiceInterface $curlService
      */
     public function __construct(array $config, CurlServiceInterface $curlService)
     {
         $this->config = new ApiOptions($config);
         $this->curlService = $curlService;
+        $this->timezone = new DateTimeZone('UTC');
     }
 
     /**
@@ -146,7 +153,7 @@ class FreespeeService implements FreespeeServiceInterface
         foreach ($callsData['cdrs'] as $callData) {
             $call = new Call();
             $call->setCdrId($callData['cdr_id']);
-            $call->setStart(new \DateTime($callData['start']));
+            $call->setStart(new DateTime($callData['start']));
             $call->setDuration($callData['duration']);
             $call->setDurationAdjusted($callData['duration_adjusted']);
             $call->setAnum($callData['anum']);
@@ -159,6 +166,26 @@ class FreespeeService implements FreespeeServiceInterface
             $call->setAnswered($callData['answered']);
             $call->setQuarantined($callData['quarantined']);
             $call->setAnumNdcName($callData['anum_ndc_name']);
+
+            if (isset($params['extended']) && $params['extended']) {
+                if ($callData['expire']) {
+                    $expire = new DateTime($callData['expire'], $this->timezone);
+                    $call->setExpire($expire);
+                }
+
+                $call->setSourceName($callData['source_name']);
+                $call->setSourceMedia($callData['source_media']);
+                $call->setClass($callData['class']);
+                $call->setPublisherId($callData['publisher_id']);
+                $call->setPartnerPublisherId($callData['partner_publisher_id']);
+                $call->setCampaignId($callData['campaign_id']);
+                $call->setPartnerCampaignId($callData['partner_campaign_id']);
+                $call->setPricingModelId($callData['pricing_model_id']);
+                $call->setCommission($callData['commission']);
+                $call->setCliId($callData['cli_id']);
+                $call->setOrderId($callData['order_id']);
+                $call->setRecordingId($callData['recording_id']);
+            }
 
             $return['results'][] = $call;
         }
