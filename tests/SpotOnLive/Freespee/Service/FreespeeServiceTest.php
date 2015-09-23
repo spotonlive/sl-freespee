@@ -373,6 +373,120 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $result);
     }
 
+    public function testFindCallsWithExtendedCall()
+    {
+        $customerId = 123;
+        $apiUrl = 'testUrl';
+        $dateTime = '2015-01-01 00:00:00';
+
+        $calls = [
+            [
+                'cdr_id' => 1,
+                'start' => $dateTime,
+                'duration' => 2,
+                'duration_adjusted' => 3,
+                'anum' => 4,
+                'anum_md5' => 'md5',
+                'bnum' => 5,
+                'cnum' => 6,
+                'customer_id' => 123456,
+                'source_id' => 789,
+                'custnr' => 455,
+                'answered' => 1,
+                'quarantined' => 0,
+                'anum_ndc_name' => 'a name',
+                'expire' => '2015-01-01 00:00:00',
+                'source_name' => 'test.com',
+                'source_media' => 'demo',
+                'class' => 0,
+                'publisher_id' => 123,
+                'partner_publisher_id' => 1234,
+                'campaign_id' => 999,
+                'partner_campaign_id' => 9999,
+                'pricing_model_id' => 20,
+                'commission' => 350.00,
+                'cli_id' => 1,
+                'order_id' => 522,
+                'recording_id' => 'd95b3308-ea0f-4db5-a783-a2de0b2f3f2f'
+            ]
+        ];
+
+        $call = new \SpotOnLive\Freespee\Models\Call();
+        $call->setCdrId(1);
+        $call->setStart(new \DateTime($dateTime));
+        $call->setDuration(2);
+        $call->setDurationAdjusted(3);
+        $call->setAnum(4);
+        $call->setAnumMd5('md5');
+        $call->setBnum(5);
+        $call->setCnum(6);
+        $call->setCustomerId(123456);
+        $call->setSourceId(789);
+        $call->setCustomerNumber(455);
+        $call->setAnswered(1);
+        $call->setQuarantined(0);
+        $call->setAnumNdcName('a name');
+        $call->setExpire(new \DateTime('2015-01-01 00:00:00'));
+        $call->setSourceName('test.com');
+        $call->setSourceMedia('demo');
+        $call->setClass(0);
+        $call->setPublisherId(123);
+        $call->setPartnerPublisherId(1234);
+        $call->setCampaignId(999);
+        $call->setPartnerCampaignId(9999);
+        $call->setPricingModelId(20);
+        $call->setCommission(350.00);
+        $call->setCliId(1);
+        $call->setOrderId(522);
+        $call->setRecordingId('d95b3308-ea0f-4db5-a783-a2de0b2f3f2f');
+
+        $page = 1;
+        $pageSize = 2;
+        $numberOfPages = 3;
+
+        $curlResult = [
+            'total' => count($calls),
+            'page' => $page,
+            'pagesize' => $pageSize,
+            'numpages' => $numberOfPages,
+            'cdrs' => $calls,
+        ];
+
+        $expected = [
+            'total' => count($calls),
+            'page' => $page,
+            'pageSize' => $pageSize,
+            'numberOfPages' => $numberOfPages,
+            'results' => [
+                $call
+            ],
+        ];
+
+        /** @var \SpotOnLive\Freespee\Models\Customer $customer */
+        $customer = $this->getMock('SpotOnLive\Freespee\Models\Customer');
+        $params = [
+            'extended' => 1,
+        ];
+
+        $this->config->expects($this->at(0))
+            ->method('get')
+            ->with('api_url')
+            ->willReturn($apiUrl);
+
+        $customer->expects($this->at(0))
+            ->method('getId')
+            ->willReturn($customerId);
+
+        $this->curlService->expects($this->at(0))
+            ->method('curl')
+            ->with($apiUrl . '/statistics/cdrs?extended=1&customer_id=' . $customerId, 'user:pass')
+            ->willReturn(json_encode($curlResult));
+
+        $result = $this->service->findCalls($customer, $params);
+
+        $this->assertEquals($expected, $result);
+    }
+
     public function testApiNoParameters()
     {
         $url = 'testUrl';
