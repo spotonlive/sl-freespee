@@ -10,6 +10,12 @@
          stopOnFailure="false"
          syntaxCheck="false"
         >
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="FREESPEE_USERNAME" value="user"/>
+        <env name="FREESPEE_PASSWORD" value="pass"/>
+    </php>
+
     <testsuites>
         <testsuite name="Package Test Suite">
             <directory suffix=".php">./tests/</directory>

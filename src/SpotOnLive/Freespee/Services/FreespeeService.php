@@ -15,12 +15,16 @@ class FreespeeService implements FreespeeServiceInterface
     /** @var ApiOptions */
     protected $config;
 
+    /** @var CurlServiceInterface */
+    protected $curlService;
+
     /**
      * @param array $config
      */
-    public function __construct(array $config)
+    public function __construct(array $config, CurlServiceInterface $curlService)
     {
         $this->config = new ApiOptions($config);
+        $this->curlService = $curlService;
     }
 
     /**
@@ -84,7 +88,7 @@ class FreespeeService implements FreespeeServiceInterface
      */
     public function findCustomer($id)
     {
-        $customerData = $this->api('/customers/', [
+        $customerData = $this->api('/customers', [
             'customer_id' => $id,
         ]);
 
@@ -151,7 +155,7 @@ class FreespeeService implements FreespeeServiceInterface
             $call->setCnum($callData['cnum']);
             $call->setCustomerId($callData['customer_id']);
             $call->setSourceId($callData['source_id']);
-            $call->setCustomerId($callData['custnr']);
+            $call->setCustomerNumber($callData['custnr']);
             $call->setAnswered($callData['answered']);
             $call->setQuarantined($callData['quarantined']);
             $call->setAnumNdcName($callData['anum_ndc_name']);
@@ -178,22 +182,12 @@ class FreespeeService implements FreespeeServiceInterface
             $url .= "?" . $queryString;
         }
 
-        // Curl
-        $curl = curl_init();
-
-        // Type
-        curl_setopt($curl, CURLOPT_URL, $this->getUrl() . $url);
-
-        // Auth
         $credentials = $this->getCredentials();
 
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_DIGEST);
-        curl_setopt($curl, CURLOPT_USERPWD, $credentials['username'] . ":" . $credentials['password']);
-
-        $result = curl_exec($curl);
-
-        curl_close($curl);
+        $result = $this->curlService->curl(
+            $this->getUrl() . $url,
+            $credentials['username'] . ":" . $credentials['password']
+        );
 
         return $this->parse($result);
     }
@@ -204,7 +198,7 @@ class FreespeeService implements FreespeeServiceInterface
      * @param array $params
      * @return array
      */
-    protected function formatParameters(array $params)
+    public function formatParameters(array $params)
     {
         $return = [];
 
@@ -266,5 +260,21 @@ class FreespeeService implements FreespeeServiceInterface
     public function getUrl()
     {
         return $this->config->get('api_url');
+    }
+
+    /**
+     * @param ApiOptions $config
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * @return ApiOptions
+     */
+    public function getConfig()
+    {
+        return $this->config;
     }
 }

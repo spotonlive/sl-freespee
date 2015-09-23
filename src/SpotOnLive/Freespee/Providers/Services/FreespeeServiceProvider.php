@@ -35,7 +35,9 @@ class FreespeeServiceProvider extends ServiceProvider
                 $freespeeConfig = [];
             }
 
-            return new FreespeeService($freespeeConfig);
+            $curlService = $app->make('SpotOnLive\Freespee\Services\CurlService');
+
+            return new FreespeeService($freespeeConfig, $curlService);
         });
 
         $this->mergeConfig();
