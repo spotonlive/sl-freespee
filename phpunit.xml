@@ -27,8 +27,10 @@
             <directory>./src</directory>
             <exclude>
                 <directory>./src/config</directory>
+                <directory>./src/SpotOnLive/Freespee/Providers</directory>
                 <directory>./tests</directory>
                 <directory>./vendor</directory>
+
                 <file>./src/Services/CurlService.php</file>
             </exclude>
         </whitelist>
