@@ -23,8 +23,14 @@
     </testsuites>
 
     <filter>
-        <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./src</directory>
+        <whitelist>
+            <directory>./src</directory>
+            <exclude>
+                <directory>./src/config</directory>
+                <directory>./tests</directory>
+                <directory>./vendor</directory>
+                <file>./src/Services/CurlService.php</file>
+            </exclude>
         </whitelist>
     </filter>
 </phpunit>
