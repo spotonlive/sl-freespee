@@ -34,7 +34,7 @@ interface FreespeeServiceInterface
      * Find customer
      *
      * @param integer $id
-     * @return \SpotOnLive\Freespee\Models\Customer|null
+     * @return CustomerInterface|null
      */
     public function findCustomer($id);
 
