@@ -154,7 +154,7 @@ class FreespeeService implements FreespeeServiceInterface
         foreach ($callsData['cdrs'] as $callData) {
             $call = new Call();
             $call->setCdrId($callData['cdr_id']);
-            $call->setStart(new DateTime($callData['start']));
+            $call->setStart(new DateTime($callData['start'], $this->timezone));
             $call->setDuration($callData['duration']);
             $call->setDurationAdjusted($callData['duration_adjusted']);
             $call->setAnum($callData['anum']);
