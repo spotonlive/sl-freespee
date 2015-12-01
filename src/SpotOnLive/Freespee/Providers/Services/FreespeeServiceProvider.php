@@ -30,12 +30,12 @@ class FreespeeServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('SpotOnLive\Freespee\Services\FreespeeService', function (Application $app) {
+        $this->app->bind(\SpotOnLive\Freespee\Services\FreespeeService::class, function (Application $app) {
             if (!$freespeeConfig = config('freespee')) {
                 $freespeeConfig = [];
             }
 
-            $curlService = $app->make('SpotOnLive\Freespee\Services\CurlService');
+            $curlService = $app->make(\SpotOnLive\Freespee\Services\CurlService::class);
 
             return new FreespeeService($freespeeConfig, $curlService);
         });
