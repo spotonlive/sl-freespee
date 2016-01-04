@@ -24,6 +24,9 @@ class FreespeeService implements FreespeeServiceInterface
     /** @var DateTimeZone */
     protected $timezone;
 
+    /** @var array */
+    protected $credentials = [];
+
     /**
      * @param array $config
      * @param CurlServiceInterface $curlService
@@ -268,16 +271,34 @@ class FreespeeService implements FreespeeServiceInterface
      */
     protected function getCredentials()
     {
-        $credentials = [
-            'username' => env('FREESPEE_USERNAME', null),
-            'password' => env('FREESPEE_PASSWORD', null),
-        ];
+        if (!isset($this->credentials['username']) || is_null($this->credentials['username'])) {
+            $this->credentials = [
+                'username' => env('FREESPEE_USERNAME', null),
+                'password' => env('FREESPEE_PASSWORD', null),
+            ];
+        }
+
+        $credentials = $this->credentials;
 
         if (is_null($credentials['username']) || is_null($credentials['password'])) {
             throw new InvalidCredentialsException('Please provide your freespee credentials');
         }
 
         return $credentials;
+    }
+
+    /**
+     * Set credentials
+     *
+     * @param string $username
+     * @param string $password
+     */
+    public function setCredentials($username, $password)
+    {
+        $this->credentials = [
+            'username' => $username,
+            'password' => $password,
+        ];
     }
 
     /**
