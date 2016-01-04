@@ -36,6 +36,11 @@ class FreespeeService implements FreespeeServiceInterface
         $this->config = new ApiOptions($config);
         $this->curlService = $curlService;
         $this->timezone = new DateTimeZone('UTC');
+
+        $this->credentials = [
+            'username' => env('FREESPEE_USERNAME', null),
+            'password' => env('FREESPEE_PASSWORD', null),
+        ];
     }
 
     /**
@@ -271,13 +276,6 @@ class FreespeeService implements FreespeeServiceInterface
      */
     protected function getCredentials()
     {
-        if (!isset($this->credentials['username']) || is_null($this->credentials['username'])) {
-            $this->credentials = [
-                'username' => env('FREESPEE_USERNAME', null),
-                'password' => env('FREESPEE_PASSWORD', null),
-            ];
-        }
-
         $credentials = $this->credentials;
 
         if (is_null($credentials['username']) || is_null($credentials['password'])) {
