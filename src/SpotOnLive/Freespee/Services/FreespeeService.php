@@ -269,8 +269,8 @@ class FreespeeService implements FreespeeServiceInterface
     protected function getCredentials()
     {
         $credentials = [
-            'username' => env('FREESPEE_USERNAME'),
-            'password' => env('FREESPEE_PASSWORD'),
+            'username' => env('FREESPEE_USERNAME', null),
+            'password' => env('FREESPEE_PASSWORD', null),
         ];
 
         if (is_null($credentials['username']) || is_null($credentials['password'])) {
