@@ -3,6 +3,7 @@
 namespace SpotOnLiveTest\Freespee\Services;
 
 use PHPUnit_Framework_TestCase;
+use SpotOnLive\Freespee\Services\FreespeeService;
 
 class FreespeeServiceTest extends PHPUnit_Framework_TestCase
 {
@@ -607,5 +608,28 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
         $result = $this->service->getConfig();
 
         $this->assertSame($newConfig, $result);
+    }
+
+    public function testSetCredentials()
+    {
+        $credentials = [
+            'username' => 'test-username',
+            'password' => 'test-password',
+        ];
+
+        /** @var FreespeeService $service */
+        $service = new $this->service([], $this->curlService);
+
+        $class = new \ReflectionClass(get_class($service));
+
+        $matchCredentials = $class->getMethod('getCredentials');
+        $matchCredentials->setAccessible(true);
+
+        $service->setCredentials($credentials['username'], $credentials['password']);
+
+        $this->assertSame(
+            $credentials,
+            $matchCredentials->invoke($service)
+        );
     }
 }
