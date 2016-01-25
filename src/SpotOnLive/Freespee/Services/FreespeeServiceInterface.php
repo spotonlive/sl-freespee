@@ -46,4 +46,12 @@ interface FreespeeServiceInterface
      * @return array
      */
     public function findCalls(CustomerInterface $customer, $params = []);
+
+    /**
+     * Set credentials
+     *
+     * @param string $username
+     * @param string $password
+     */
+    public function setCredentials($username, $password);
 }
