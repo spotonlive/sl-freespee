@@ -54,4 +54,11 @@ interface FreespeeServiceInterface
      * @param string $password
      */
     public function setCredentials($username, $password);
+
+    /**
+     * Set/override default API url
+     *
+     * @param string $apiUrl
+     */
+    public function setApiUrl($apiUrl);
 }
