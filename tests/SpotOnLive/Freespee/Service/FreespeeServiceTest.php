@@ -16,6 +16,12 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
     /** @var \SpotOnLive\Freespee\Services\CurlServiceInterface */
     protected $curlService;
 
+    protected $apiUrl = 'demoUrl';
+
+    protected $apiUsername = 'demoUsername';
+
+    protected $apiPassword = 'demoPassword';
+
     public function setUp()
     {
         /** @var \SpotOnLive\Freespee\Options\ApiOptions $config */
@@ -26,7 +32,11 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
         $curlService = $this->getMock('SpotOnLive\Freespee\Services\CurlServiceInterface');
         $this->curlService = $curlService;
 
-        $service = new \SpotOnLive\Freespee\Services\FreespeeService([], $curlService);
+        $service = new \SpotOnLive\Freespee\Services\FreespeeService([
+            'api_url' => $this->apiUrl,
+            'username' => $this->apiUsername,
+            'password' => $this->apiPassword,
+        ], $curlService);
         $this->service = $service;
 
         $this->service->setConfig($config);
@@ -34,7 +44,6 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
 
     public function testFindAllCustomersNoCustomers()
     {
-        $apiUrl = 'demoUrl';
         $page = 15;
 
         $customers = [];
@@ -44,14 +53,9 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
             'customers' => $customers,
         ];
 
-        $this->config->expects($this->at(0))
-            ->method('get')
-            ->with('api_url')
-            ->willReturn($apiUrl);
-
         $this->curlService->expects($this->at(0))
             ->method('curl')
-            ->with($apiUrl . '/customers?page=' . $page, 'user:pass')
+            ->with($this->apiUrl . '/customers?page=' . $page, $this->apiUsername . ':' . $this->apiPassword)
             ->willReturn(json_encode($curlResult));
 
         $result = $this->service->findAllCustomers($page);
@@ -61,7 +65,6 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
 
     public function testFindAllCustomersWithCustomer()
     {
-        $apiUrl = 'demoUrl';
         $page = 15;
 
         $customers = [
@@ -108,14 +111,9 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
             'customers' => $customers,
         ];
 
-        $this->config->expects($this->at(0))
-            ->method('get')
-            ->with('api_url')
-            ->willReturn($apiUrl);
-
         $this->curlService->expects($this->at(0))
             ->method('curl')
-            ->with($apiUrl . '/customers?page=' . $page, 'user:pass')
+            ->with($this->apiUrl . '/customers?page=' . $page, $this->apiUsername . ':' . $this->apiPassword)
             ->willReturn(json_encode($curlResult));
 
         $result = $this->service->findAllCustomers($page);
@@ -126,20 +124,14 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
     public function testTotalNumberOfCustomers()
     {
         $totalNumber = 143;
-        $apiUrl = 'apiUrl';
 
         $curlReturn = [
             'total' => $totalNumber,
         ];
 
-        $this->config->expects($this->at(0))
-            ->method('get')
-            ->with('api_url')
-            ->willReturn($apiUrl);
-
         $this->curlService->expects($this->at(0))
             ->method('curl')
-            ->with($apiUrl . '/customers')
+            ->with($this->apiUrl . '/customers')
             ->willReturn(json_encode($curlReturn));
 
         $result = $this->service->getTotalNumberOfCustomers();
@@ -149,7 +141,6 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
 
     public function testFindCustomerNoCustomer()
     {
-        $apiUrl = 'demoUrl';
         $customerId = 123;
 
         $customers = [];
@@ -159,14 +150,9 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
             'customers' => $customers,
         ];
 
-        $this->config->expects($this->at(0))
-            ->method('get')
-            ->with('api_url')
-            ->willReturn($apiUrl);
-
         $this->curlService->expects($this->at(0))
             ->method('curl')
-            ->with($apiUrl . '/customers?customer_id=' . $customerId, 'user:pass')
+            ->with($this->apiUrl . '/customers?customer_id=' . $customerId, $this->apiUsername . ':' . $this->apiPassword)
             ->willReturn(json_encode($curlResult));
 
         $result = $this->service->findCustomer($customerId);
@@ -176,7 +162,6 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
 
     public function testFindCustomerWithCustomer()
     {
-        $apiUrl = 'demoUrl';
         $customerId = 123;
 
         $customers = [
@@ -223,14 +208,9 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
             'customers' => $customers,
         ];
 
-        $this->config->expects($this->at(0))
-            ->method('get')
-            ->with('api_url')
-            ->willReturn($apiUrl);
-
         $this->curlService->expects($this->at(0))
             ->method('curl')
-            ->with($apiUrl . '/customers?customer_id=' . $customerId, 'user:pass')
+            ->with($this->apiUrl . '/customers?customer_id=' . $customerId, $this->apiUsername . ':' . $this->apiPassword)
             ->willReturn(json_encode($curlResult));
 
         $result = $this->service->findCustomer($customerId);
@@ -241,7 +221,6 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
     public function testFindCallsNoCalls()
     {
         $customerId = 123;
-        $apiUrl = 'testUrl';
 
         $calls = [];
 
@@ -266,13 +245,8 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
         ];
 
         /** @var \SpotOnLive\Freespee\Models\Customer $customer */
-        $customer = $this->getMock('SpotOnLive\Freespee\Models\Customer');
+        $customer = $this->getMock(\SpotOnLive\Freespee\Models\Customer::class);
         $params = [];
-
-        $this->config->expects($this->at(0))
-            ->method('get')
-            ->with('api_url')
-            ->willReturn($apiUrl);
 
         $customer->expects($this->at(0))
             ->method('getId')
@@ -280,7 +254,7 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
 
         $this->curlService->expects($this->at(0))
             ->method('curl')
-            ->with($apiUrl . '/statistics/cdrs?customer_id=' . $customerId, 'user:pass')
+            ->with($this->apiUrl . '/statistics/cdrs?customer_id=' . $customerId, $this->apiUsername . ':' . $this->apiPassword)
             ->willReturn(json_encode($curlResult));
 
         $result = $this->service->findCalls($customer, $params);
@@ -291,7 +265,6 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
     public function testFindCallsWithCall()
     {
         $customerId = 123;
-        $apiUrl = 'testUrl';
         $dateTime = '2015-01-01 00:00:00';
 
         $calls = [
@@ -352,13 +325,8 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
         ];
 
         /** @var \SpotOnLive\Freespee\Models\Customer $customer */
-        $customer = $this->getMock('SpotOnLive\Freespee\Models\Customer');
+        $customer = $this->getMock(\SpotOnLive\Freespee\Models\Customer::class);
         $params = [];
-
-        $this->config->expects($this->at(0))
-            ->method('get')
-            ->with('api_url')
-            ->willReturn($apiUrl);
 
         $customer->expects($this->at(0))
             ->method('getId')
@@ -366,7 +334,7 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
 
         $this->curlService->expects($this->at(0))
             ->method('curl')
-            ->with($apiUrl . '/statistics/cdrs?customer_id=' . $customerId, 'user:pass')
+            ->with($this->apiUrl . '/statistics/cdrs?customer_id=' . $customerId, $this->apiUsername . ':' . $this->apiPassword)
             ->willReturn(json_encode($curlResult));
 
         $result = $this->service->findCalls($customer, $params);
@@ -377,7 +345,6 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
     public function testFindCallsWithExtendedCall()
     {
         $customerId = 123;
-        $apiUrl = 'testUrl';
         $dateTime = '2015-01-01 00:00:00';
 
         $calls = [
@@ -464,15 +431,10 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
         ];
 
         /** @var \SpotOnLive\Freespee\Models\Customer $customer */
-        $customer = $this->getMock('SpotOnLive\Freespee\Models\Customer');
+        $customer = $this->getMock(\SpotOnLive\Freespee\Models\Customer::class);
         $params = [
             'extended' => 1,
         ];
-
-        $this->config->expects($this->at(0))
-            ->method('get')
-            ->with('api_url')
-            ->willReturn($apiUrl);
 
         $customer->expects($this->at(0))
             ->method('getId')
@@ -480,7 +442,7 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
 
         $this->curlService->expects($this->at(0))
             ->method('curl')
-            ->with($apiUrl . '/statistics/cdrs?extended=1&customer_id=' . $customerId, 'user:pass')
+            ->with($this->apiUrl . '/statistics/cdrs?extended=1&customer_id=' . $customerId, $this->apiUsername . ':' . $this->apiPassword)
             ->willReturn(json_encode($curlResult));
 
         $result = $this->service->findCalls($customer, $params);
@@ -492,21 +454,13 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
     {
         $url = 'testUrl';
 
-        $params = [
-        ];
-
-        $apiUrl = 'demoApiUrl';
+        $params = [];
 
         $curlResult = ['demo'];
 
-        $this->config->expects($this->at(0))
-            ->method('get')
-            ->with('api_url')
-            ->willReturn($apiUrl);
-
         $this->curlService->expects($this->at(0))
             ->method('curl')
-            ->with($apiUrl . $url, 'user:pass')
+            ->with($this->apiUrl . $url, $this->apiUsername . ':' . $this->apiPassword)
             ->willReturn(json_encode($curlResult));
 
         $result = $this->service->api($url, $params);
@@ -522,18 +476,11 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
             'a' => 'b'
         ];
 
-        $apiUrl = 'demoApiUrl';
-
         $curlResult = ['demo'];
-
-        $this->config->expects($this->at(0))
-            ->method('get')
-            ->with('api_url')
-            ->willReturn($apiUrl);
 
         $this->curlService->expects($this->at(0))
             ->method('curl')
-            ->with($apiUrl . $url . '?a=b', 'user:pass')
+            ->with($this->apiUrl . $url . '?a=b', $this->apiUsername . ':' . $this->apiPassword)
             ->willReturn(json_encode($curlResult));
 
         $result = $this->service->api($url, $params);
@@ -565,14 +512,14 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
         ];
 
         $this->setExpectedException(
-            '\SpotOnLive\Freespee\Exceptions\InvalidAPICallException',
+            \SpotOnLive\Freespee\Exceptions\InvalidAPICallException::class,
             sprintf(
                 'Freespee API Error: %s',
                 json_encode($array['errors'])
             )
         );
 
-        $result = $this->service->parse(json_encode($array));
+        $this->service->parse(json_encode($array));
     }
 
     public function testParse()
@@ -588,21 +535,25 @@ class FreespeeServiceTest extends PHPUnit_Framework_TestCase
 
     public function testGetUrl()
     {
-        $apiUrl = 'apiUrl';
+        $result = $this->service->getApiUrl();
+        $this->assertSame($this->apiUrl, $result);
+    }
 
-        $this->config->expects($this->at(0))
-            ->method('get')
-            ->with('api_url')
-            ->willReturn($apiUrl);
+    public function testSetUrl()
+    {
+        $newApiUrl = 'new demo api url';
 
-        $result = $this->service->getUrl();
+        $this->service->setApiUrl($newApiUrl);
+        $result = $this->service->getApiUrl();
 
-        $this->assertSame($apiUrl, $result);
+        $this->assertSame($newApiUrl, $result);
     }
 
     public function testSetConfig()
     {
+        /** @var \SpotOnLive\Freespee\Options\OptionsInterface $newConfig */
         $newConfig = $this->getMock('SpotOnLive\Freespee\Options\Options');
+
         $this->service->setConfig($newConfig);
 
         $result = $this->service->getConfig();

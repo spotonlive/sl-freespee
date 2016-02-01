@@ -6,6 +6,9 @@ class ApiOptions extends Options implements OptionsInterface
 {
     /** @var array */
     protected $defaults = [
-        'api_url' => 'https://api.analytics2.freespee.com/2.4.0',
+        'api_url' => null,
+
+        'username' => null,
+        'password' => null,
     ];
 }

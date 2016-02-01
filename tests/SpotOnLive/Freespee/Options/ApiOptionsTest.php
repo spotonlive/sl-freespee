@@ -10,11 +10,13 @@ class ApiOptionsTest extends PHPUnit_Framework_TestCase
     protected $options;
 
     protected $defaults = [
-        'api_url' => 'https://api.analytics2.freespee.com/2.4.0'
+        'api_url' => null,
+        'username' => null,
+        'password' => null,
     ];
 
     protected $demoOptions = [
-        'a' => 'b'
+        'a' => 'b',
     ];
 
     public function setUp()
@@ -45,7 +47,9 @@ class ApiOptionsTest extends PHPUnit_Framework_TestCase
     public function testGetOptions()
     {
         $options = [
-            'api_url' => 'https://api.analytics2.freespee.com/2.4.0',
+            'api_url' => null,
+            'username' => null,
+            'password' => null,
             'a' => 'b'
         ];
 
@@ -57,7 +61,8 @@ class ApiOptionsTest extends PHPUnit_Framework_TestCase
     public function testSetOptions()
     {
         $newOptions = [
-            'api_url' => 'https://api.analytics2.freespee.com/2.4.0'
+            'username' => null,
+            'password' => null,
         ];
 
         $this->options->setOptions($newOptions);

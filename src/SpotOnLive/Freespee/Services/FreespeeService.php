@@ -24,6 +24,11 @@ class FreespeeService implements FreespeeServiceInterface
     /** @var DateTimeZone */
     protected $timezone;
 
+    /**
+     * @var string
+     */
+    protected $apiUrl;
+
     /** @var array */
     protected $credentials = [];
 
@@ -37,9 +42,13 @@ class FreespeeService implements FreespeeServiceInterface
         $this->curlService = $curlService;
         $this->timezone = new DateTimeZone('UTC');
 
+        // Set API url
+        $this->apiUrl = $this->config->get('api_url');
+
+        // Set credentials
         $this->credentials = [
-            'username' => env('FREESPEE_USERNAME', null),
-            'password' => env('FREESPEE_PASSWORD', null),
+            'username' => $this->config->get('username'),
+            'password' => $this->config->get('password'),
         ];
     }
 
@@ -221,7 +230,7 @@ class FreespeeService implements FreespeeServiceInterface
         $credentials = $this->getCredentials();
 
         $result = $this->curlService->curl(
-            $this->getUrl() . $url,
+            $this->getApiUrl() . $url,
             $credentials['username'] . ":" . $credentials['password']
         );
 
@@ -286,7 +295,7 @@ class FreespeeService implements FreespeeServiceInterface
     }
 
     /**
-     * Set credentials
+     * Set/override default credentials
      *
      * @param string $username
      * @param string $password
@@ -300,13 +309,23 @@ class FreespeeService implements FreespeeServiceInterface
     }
 
     /**
-     * Get API Url
+     * Get API url
      *
      * @return string
      */
-    public function getUrl()
+    public function getApiUrl()
     {
-        return $this->config->get('api_url');
+        return $this->apiUrl;
+    }
+
+    /**
+     * Set/override default API url
+     *
+     * @param string $apiUrl
+     */
+    public function setApiUrl($apiUrl)
+    {
+        $this->apiUrl = $apiUrl;
     }
 
     /**
