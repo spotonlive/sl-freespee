@@ -1,3 +1,5 @@
+languages:
+  PHP: true
 exclude_paths:
 - tests/*
 - src/SpotOnLive/Freespee/Models/*
