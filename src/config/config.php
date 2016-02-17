@@ -7,7 +7,7 @@ return [
      * https://api.[server].freespee.com/[api-version]
      * Ex. https://api.analytics2.freespee.com/2.4.0
      */
-    'api_url' => '',
+    'api_url' => env('FREESPEE_API_URL', null),
 
     /*
      * Freespee credentials
