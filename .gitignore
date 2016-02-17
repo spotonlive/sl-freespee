@@ -1,2 +1,4 @@
 vendor
 codeclimate.json
+phpunit.xml
+composer.lock
